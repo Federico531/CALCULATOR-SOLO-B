@@ -1,0 +1,14 @@
+{
+  "name": "solo-2b",
+  "version": "1.0.0",
+  "description": "",
+  "main": "boceto.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
