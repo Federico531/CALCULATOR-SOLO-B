@@ -36,10 +36,12 @@ class Operation {
 
 function assignDigit(digit) {
     const v = new Value();
+    console.log(v.numA)
 
     if (!v.numA && isNumber(digit)) {
         v.numA = parseFloat(digit);
         console.log("assigned numA: " + v.numA)
+        console.log(v.numA)
 
     } else if (v.numA && isSymbol(digit)) {
         v.operator = digit
