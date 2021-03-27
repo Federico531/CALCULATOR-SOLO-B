@@ -3,77 +3,67 @@
 //MAKE DOT BUTTON
 //MAKE MORE UNIT TESTS
 //CREATE HISTORY THROUGH ARRAY CLASSES
-//VER "2" "+" "2" "2" "+" --> (EL MAS NO FUNCIONA AHI POR QUE?)
-//OK NO SE ASIGNA ESE 2
-var numA;
-var numB;
-var operator;
-var lastOperator;
-var lastDigit;
-var total;
-
-
+class Value {
+    constructor(numA, numB, operator, lastOperator, lastDigit, total) {
+        this.numA = numA
+        this.numB = numB
+        this.operator = operator
+        this.lastOperator = lastOperator
+        this.lastDigit = lastDigit
+        this.total = total
+    }
+}
 class Operation {
     sum(a, b) {
-        total = a + b
-        return total
+        Value.total = a + b
+        return Value.total
     }
     substract(a, b) {
-        total = a - b
-        return total
+        Value.total = a - b
+        return Value.total
     }
     multiply(a, b) {
-        total = a * b
-        return total
+        Value.total = a * b
+        return Value.total
     }
     divide(a, b) {
-        total = a / b
-        return total
+        Value.total = a / b
+        return Value.total
     }
     equals() {
-
     }
 }
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById("enter").addEventListener('click', (e) => {
-        var digit = document.getElementById("input").value
-        assignDigits(digit);
-        document.getElementById("input").value = ""
-        e.preventDefault();
-    })
-});
-function assignDigits(digit) {
 
-    if (!numA && isNumber(digit)) {
-        numA = parseFloat(digit);
-        console.log("assigned numA: " + numA)
+function assignDigit(digit) {
+    const v = new Value();
 
-    } else if (numA && isSymbol(digit)) {
-        operator = digit
-        if (lastOperator == operator && isSymbol(lastDigit)) {
-            alert("repeats " + lastOperator)
+    if (!v.numA && isNumber(digit)) {
+        v.numA = parseFloat(digit);
+        console.log("assigned numA: " + v.numA)
+
+    } else if (v.numA && isSymbol(digit)) {
+        v.operator = digit
+        if (v.lastOperator == v.operator && isSymbol(v.lastDigit)) {
+            alert("repeats " + v.lastOperator)
         } else {
-            lastDigit = digit;
-            lastOperator = operator;
-            console.log("assigned operator: " + operator)
+            v.lastDigit = digit;
+            v.lastOperator = v.operator;
+            console.log("assigned operator: " + v.operator)
         }
 
-    } else if (numA && !numB && isNumber(digit)) {
-        lastDigit = digit
-        numB = parseFloat(digit)
-        console.log("assigned numB: " + numB)
-        whatOperation(operator)
-        numA = total
-        operator = "";
-        numB = "";
-        console.log("All empty \nnumA:" + numA + "\nOperator: " + operator + "\nnumB: " + numB)
-        console.log("este es lastoperator" + lastOperator)
-    }
-}
-//PUNTO DE PARTIDA PARA EL UI, VER DESPUES 
-function operation(numA, operator, numB) {
-    if (operator == "+") {
-        display.value = numA + numB
+    } else if (v.numA && !v.numB && isNumber(digit)) {
+        if (isNumber(v.lastDigit)) {
+            console.log("Corresponde ingresar un operador")
+        } else {
+            v.lastDigit = digit
+            v.numB = parseFloat(digit)
+            console.log("assigned numB: " + v.numB)
+            whichOperationIs(v.operator)
+            v.numA = v.total
+            v.operator = "";
+            v.numB = "";
+            console.log("Result: " + v.total)
+        }
     }
 }
 function isNumber(digit) {
@@ -86,7 +76,7 @@ function isNumber(digit) {
     }
 }
 function isSymbol(digit) {
-    //crep que se puede armar algun objeto con metodos, y hacer map de esos metodos hasta que alguno de true?
+    //creo que se puede armar algun objeto con metodos, y hacer map de esos metodos hasta que alguno de true?
     const sums = digit.includes("+");
     const substracts = digit.includes("-");
     const multiplies = digit.includes("X");
@@ -99,16 +89,17 @@ function isSymbol(digit) {
         return false;
     }
 }
-function whatOperation(digit) {
+function whichOperationIs(digit) {
     const operation = new Operation();
+    const v = new Value();
     switch (true) {
-        case digit.includes("+"): operation.sum(numA, numB);
+        case digit.includes("+"): operation.sum(v.numA, v.numB);
             break;
-        case digit.includes("-"): operation.substract(numA, numB);
+        case digit.includes("-"): operation.substract(v.numA, v.numB);
             break;
-        case digit.includes("X"): operation.multiply(numA, numB);
+        case digit.includes("X"): operation.multiply(v.numA, v.numB);
             break;
-        case digit.includes("/"): operation.divide(numA, numB);
+        case digit.includes("/"): operation.divide(v.numA, v.numB);
             break;
         case digit.includes("%"): alert('es un porcentaje!');
             break;
@@ -117,12 +108,28 @@ function whatOperation(digit) {
         default: alert('Typed a number when should have typed symbol');
     }
 }
-const operatione = new Operation()
+//INPUT
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById("enter").addEventListener('click', (e) => {
+        var digit = document.getElementById("input").value
+        assignDigit(digit);
+        document.getElementById("input").value = ""
+        e.preventDefault();
+    })
+});
 
+const operation = new Operation()
 module.exports = {
-    sum: operatione.sum,
-    substract: operatione.substract,
-    multiply: operatione.multiply,
-    divide: operatione.divide,
+    sum: operation.sum,
+    substract: operation.substract,
+    multiply: operation.multiply,
+    divide: operation.divide,
 };
 
+/*
+//PUNTO DE PARTIDA PARA EL UI, VER DESPUES 
+function operation (numA, operator, numB) {
+    if (operator == "+") {
+        display.value = numA + numB
+    }
+}*/
