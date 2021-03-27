@@ -13,35 +13,35 @@ class Value {
         this.total = total
     }
 }
+const v = new Value()
+
 class Operation {
     sum(a, b) {
-        Value.total = a + b
-        return Value.total
+        v.total = a + b
+        return v.total
     }
     substract(a, b) {
-        Value.total = a - b
-        return Value.total
+        v.total = a - b
+        return v.total
     }
     multiply(a, b) {
-        Value.total = a * b
-        return Value.total
+        v.total = a * b
+        return v.total
     }
     divide(a, b) {
-        Value.total = a / b
-        return Value.total
+        v.total = a / b
+        return v.total
     }
     equals() {
+
     }
 }
 
-function assignDigit(digit) {
-    const v = new Value();
-    console.log(v.numA)
+function asignDigit(digit) {
 
     if (!v.numA && isNumber(digit)) {
         v.numA = parseFloat(digit);
         console.log("assigned numA: " + v.numA)
-        console.log(v.numA)
 
     } else if (v.numA && isSymbol(digit)) {
         v.operator = digit
@@ -68,6 +68,8 @@ function assignDigit(digit) {
         }
     }
 }
+
+
 function isNumber(digit) {
     for (var i = 0; i < 10; i++) {
         var number = digit.includes(i.toString());
@@ -78,7 +80,7 @@ function isNumber(digit) {
     }
 }
 function isSymbol(digit) {
-    //creo que se puede armar algun objeto con metodos, y hacer map de esos metodos hasta que alguno de true?
+    //crep que se puede armar algun objeto con metodos, y hacer map de esos metodos hasta que alguno de true?
     const sums = digit.includes("+");
     const substracts = digit.includes("-");
     const multiplies = digit.includes("X");
@@ -93,7 +95,6 @@ function isSymbol(digit) {
 }
 function whichOperationIs(digit) {
     const operation = new Operation();
-    const v = new Value();
     switch (true) {
         case digit.includes("+"): operation.sum(v.numA, v.numB);
             break;
@@ -110,28 +111,30 @@ function whichOperationIs(digit) {
         default: alert('Typed a number when should have typed symbol');
     }
 }
-//INPUT
+
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("enter").addEventListener('click', (e) => {
         var digit = document.getElementById("input").value
-        assignDigit(digit);
+        asignDigit(digit);
         document.getElementById("input").value = ""
         e.preventDefault();
     })
 });
+const operatione = new Operation()
 
-const operation = new Operation()
 module.exports = {
-    sum: operation.sum,
-    substract: operation.substract,
-    multiply: operation.multiply,
-    divide: operation.divide,
+    sum: operatione.sum,
+    substract: operatione.substract,
+    multiply: operatione.multiply,
+    divide: operatione.divide,
 };
 
 /*
 //PUNTO DE PARTIDA PARA EL UI, VER DESPUES 
-function operation (numA, operator, numB) {
+function operation(numA, operator, numB) {
     if (operator == "+") {
         display.value = numA + numB
     }
-}*/
+}
+*/
+
