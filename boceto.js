@@ -3,13 +3,15 @@
 //MAKE DOT BUTTON
 //MAKE MORE UNIT TESTS
 //CREATE HISTORY THROUGH ARRAY CLASSES
-
+//VER "2" "+" "2" "2" "+" --> (EL MAS NO FUNCIONA AHI POR QUE?)
+//OK NO SE ASIGNA ESE 2
 var numA;
 var numB;
 var operator;
 var lastOperator;
 var lastDigit;
 var total;
+
 
 class Operation {
     sum(a, b) {
@@ -32,7 +34,6 @@ class Operation {
 
     }
 }
-
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("enter").addEventListener('click', (e) => {
         var digit = document.getElementById("input").value
@@ -41,46 +42,34 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
     })
 });
-
 function assignDigits(digit) {
 
     if (!numA && isNumber(digit)) {
         numA = parseFloat(digit);
-        lastDigit = digit;
         console.log("assigned numA: " + numA)
 
-    } else if (numA && !operator && isSymbol(digit) || operator && operator == lastOperator && isSymbol(digit)) {
+    } else if (numA && isSymbol(digit)) {
         operator = digit
-
         if (lastOperator == operator && isSymbol(lastDigit)) {
-            console.log("assigned nothing because it repeats " + lastOperator)
-
-        } else if (lastOperator !== operator) {
-            lastOperator = operator;
+            alert("repeats " + lastOperator)
+        } else {
             lastDigit = digit;
-            console.log("assigned other operator: " + operator)
+            lastOperator = operator;
+            console.log("assigned operator: " + operator)
         }
 
-    } else if (numA && operator && isNumber(digit)) {
-        if (isNumber(lastDigit)) {
-            console.log("no hacemos nada porque aca correspondería un signo")
-
-        } else if (isSymbol(lastDigit) && lastOperator){
-            lastDigit = digit
-            //hace esta operación directamente
-            numB = parseFloat(digit)
-            console.log("assigned numB: " + numB)
-            whatOperation(operator)
-            lastDigit = digit
-            numA = total
-            numB = "";
-            console.log("this is the last operator " + lastOperator + "\n\n")
-            console.log("result: " + total)
-
-        }
+    } else if (numA && !numB && isNumber(digit)) {
+        lastDigit = digit
+        numB = parseFloat(digit)
+        console.log("assigned numB: " + numB)
+        whatOperation(operator)
+        numA = total
+        operator = "";
+        numB = "";
+        console.log("All empty \nnumA:" + numA + "\nOperator: " + operator + "\nnumB: " + numB)
+        console.log("este es lastoperator" + lastOperator)
     }
 }
-
 //PUNTO DE PARTIDA PARA EL UI, VER DESPUES 
 function operation(numA, operator, numB) {
     if (operator == "+") {
@@ -125,10 +114,9 @@ function whatOperation(digit) {
             break;
         case digit.includes("="): operation.equals();
             break;
-        default: alert('no es un simbolo valido');
+        default: alert('Typed a number when should have typed symbol');
     }
 }
-
 const operatione = new Operation()
 
 module.exports = {
